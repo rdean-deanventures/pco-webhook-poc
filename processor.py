@@ -4,10 +4,10 @@ import requests
 # -------------------------------------
 # EMAILJS SETTINGS
 # -------------------------------------
-SERVICE_ID = "service_cdqifd9"
-TEMPLATE_ID = "template_e632ic2"
-PUBLIC_KEY = "D3PHlEkPv4MmvSxz1"
-PRIVATE_KEY = "Ii-i6oKAS2Gz0D2yagQIj"
+SERVICE_ID = "YOUR_SERVICE_ID"
+TEMPLATE_ID = "YOUR_TEMPLATE_ID"
+PUBLIC_KEY = "YOUR_PUBLIC_KEY"
+PRIVATE_KEY = "YOUR_PRIVATE_KEY"
 
 
 def process_webhook(payload):
@@ -84,4 +84,4 @@ def send_test_email():
     except Exception as e:
 
         print("EMAIL SEND FAILED:")
-        print(str(e)) print("=================================\n")
+        print(str(e))
