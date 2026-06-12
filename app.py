@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 import json
+from processor import send_email
 
 from processor import handle_webhook_event
 
@@ -28,3 +29,14 @@ def webhook():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+    @app.route("/webhook", methods=["POST"])
+    def webhook():
+        payload = request.get_json()
+
+        print("Webhook received")
+
+        send_email(payload)
+
+        return {"status": "ok"}
