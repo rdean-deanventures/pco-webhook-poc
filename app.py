@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 import json
-from datetime import datetime
+
+from processor import handle_webhook_event
 
 app = Flask(__name__)
 
@@ -11,18 +12,18 @@ def home():
 @app.route("/webhook", methods=["POST"])
 def webhook():
 
-    print("\n==============================")
-    print("PLANNING CENTER WEBHOOK RECEIVED")
-    print(datetime.now())
-    print("==============================")
-
-    # Get raw JSON payload
     payload = request.get_json()
 
-    # Print full payload in Render logs
+    print("\n==============================")
+    print("WEBHOOK RECEIVED IN FLASK")
+    print("==============================")
+
     print(json.dumps(payload, indent=2))
 
-    return jsonify({"status": "received"}), 200
+    # 👇 THIS is the key change
+    handle_webhook_event(payload)
+
+    return jsonify({"status": "processed"}), 200
 
 
 if __name__ == "__main__":
