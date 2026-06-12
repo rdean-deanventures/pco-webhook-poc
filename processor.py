@@ -1,36 +1,47 @@
-from datetime import datetime
-
 import requests
 
-
-def handle_webhook_event(payload):
-    """
-    This is your main webhook processor.
-    Right now it's just a proof of concept.
-    """
-
-    print("\n===== PROCESSOR TRIGGERED =====")
-    print("Time:", datetime.now())
-
-    # Print the payload received from Planning Center
-    print("Payload received:")
-    print(payload)
-
-    print("===== END PROCESSOR =====\n")
-
-
-
-
+# -----------------------------
+# EMAILJS CONFIG (REPLACE THESE)
+# -----------------------------
 EMAILJS_URL = "https://api.emailjs.com/api/v1.0/email/send"
 
 SERVICE_ID = "service_cdqifd9"
 TEMPLATE_ID = "template_e632ic2"
 PUBLIC_KEY = "D3PHlEkPv4MmvSxz1"
 
-def send_email(payload):
 
-    name = payload.get("data", {}).get("attributes", {}).get("name", "Unknown")
-    person_id = payload.get("data", {}).get("id", "Unknown")
+def process_webhook(payload):
+    """
+    Main processor for Planning Center webhook events
+    """
+
+    print("\n===== PROCESSOR STARTED =====")
+
+    # Extract safe fields from Planning Center payload
+    try:
+        person = payload.get("data", {})
+        attributes = person.get("attributes", {})
+
+        name = attributes.get("name", "Unknown")
+        person_id = person.get("id", "Unknown")
+
+        print(f"Person Name: {name}")
+        print(f"Person ID: {person_id}")
+
+    except Exception as e:
+        print("Error parsing payload:", e)
+        name = "Unknown"
+        person_id = "Unknown"
+
+    # Send email
+    send_email(name, person_id, payload)
+
+    print("===== PROCESSOR COMPLETE =====\n")
+
+
+def send_email(name, person_id, payload):
+
+    print("SENDING EMAIL VIA EMAILJS...")
 
     data = {
         "service_id": SERVICE_ID,
@@ -43,8 +54,13 @@ def send_email(payload):
         }
     }
 
-    response = requests.post(EMAILJS_URL, json=data)
+    try:
+        response = requests.post(EMAILJS_URL, json=data)
 
-    print("EMAILJS RESPONSE:", response.status_code, response.text)
+        print("EMAILJS STATUS:", response.status_code)
+        print("EMAILJS RESPONSE:", response.text)
+
+    except Exception as e:
+        print("EMAIL SEND FAILED:", str(e))
 
 

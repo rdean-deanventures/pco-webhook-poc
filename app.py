@@ -1,8 +1,5 @@
 from flask import Flask, request, jsonify
-import json
-from processor import send_email
-
-from processor import handle_webhook_event
+from processor import process_webhook
 
 app = Flask(__name__)
 
@@ -16,27 +13,16 @@ def webhook():
     payload = request.get_json()
 
     print("\n==============================")
-    print("WEBHOOK RECEIVED IN FLASK")
+    print("WEBHOOK RECEIVED")
     print("==============================")
 
-    print(json.dumps(payload, indent=2))
+    print(payload)
 
-    # 👇 THIS is the key change
-    handle_webhook_event(payload)
+    # Send to processor
+    process_webhook(payload)
 
-    return jsonify({"status": "processed"}), 200
+    return jsonify({"status": "received"}), 200
 
 
 if __name__ == "__main__":
     app.run(debug=True)
-
-
-    @app.route("/webhook", methods=["POST"])
-    def webhook():
-        payload = request.get_json()
-
-        print("Webhook received")
-
-        send_email(payload)
-
-        return {"status": "ok"}
