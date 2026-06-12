@@ -4,10 +4,10 @@ import requests
 # -------------------------------------
 # EMAILJS SETTINGS
 # -------------------------------------
-SERVICE_ID = "service_65x866t"
-TEMPLATE_ID = "template_e632ic2"
-PUBLIC_KEY = "D3PHlEkPv4MmvSxz1"
-PRIVATE_KEY = "Ii-i6oKAS2Gz0D2yagQIj"
+SERVICE_ID = "YOUR_SERVICE_ID"
+TEMPLATE_ID = "YOUR_TEMPLATE_ID"
+PUBLIC_KEY = "YOUR_PUBLIC_KEY"
+PRIVATE_KEY = "YOUR_PRIVATE_KEY"
 
 
 def process_webhook(payload):
@@ -42,10 +42,12 @@ def process_webhook(payload):
         print(f"Person ID: {person_id}")
         print(f"Person Name: {full_name}")
 
-        # -------------------------------------
-        # SIMPLE EMAIL TEST
-        # -------------------------------------
-        send_test_email()
+        # Send email with actual event data
+        send_test_email(
+            event_name=event_name,
+            person_name=full_name,
+            person_id=person_id
+        )
 
     except Exception as e:
 
@@ -57,7 +59,7 @@ def process_webhook(payload):
     print("=================================\n")
 
 
-def send_test_email():
+def send_test_email(event_name, person_name, person_id):
 
     print("ATTEMPTING EMAIL SEND...")
 
@@ -67,7 +69,9 @@ def send_test_email():
         "user_id": PUBLIC_KEY,
         "accessToken": PRIVATE_KEY,
         "template_params": {
-            "message": "Webhook received successfully."
+            "event_name": event_name,
+            "person_name": person_name,
+            "person_id": person_id
         }
     }
 
