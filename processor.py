@@ -4,7 +4,7 @@ import requests
 # -------------------------------------
 # EMAILJS SETTINGS
 # -------------------------------------
-SERVICE_ID = "service_cdqifd9"
+SERVICE_ID = "service_65x866t"
 TEMPLATE_ID = "template_e632ic2"
 PUBLIC_KEY = "D3PHlEkPv4MmvSxz1"
 PRIVATE_KEY = "Ii-i6oKAS2Gz0D2yagQIj"
