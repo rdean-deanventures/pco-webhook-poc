@@ -5,10 +5,10 @@ import requests
 # -----------------------------
 EMAILJS_URL = "https://api.emailjs.com/api/v1.0/email/send"
 
-SERVICE_ID = "YOUR_SERVICE_ID"
-TEMPLATE_ID = "YOUR_TEMPLATE_ID"
-PUBLIC_KEY = "YOUR_PUBLIC_KEY"
-PRIVATE_KEY = "YOUR_PRIVATE_KEY"
+SERVICE_ID = "service_cdqifd9"
+TEMPLATE_ID = "template_e632ic2"
+PUBLIC_KEY = "D3PHlEkPv4MmvSxz1"
+PRIVATE_KEY = "Ii-i6oKAS2Gz0D2yagQIj"
 
 
 def process_webhook(payload):
